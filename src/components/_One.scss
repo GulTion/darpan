@@ -1,0 +1,16 @@
+.PeerMake{
+    &_input{
+        width: 100%;
+        font-size: 30px;
+        &_you{
+            color: blue;
+            width: 100%;
+            font-size: 30px;
+        }
+        &_me{
+            color: red;
+            width: 100%;
+            font-size: 30px;
+        }
+    }
+}

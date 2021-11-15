@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <PeerMake />
       <h1>Hello</h1>
-      <RemoteList />
+      {/* <RemoteList /> */}
     </div>
   );
 }

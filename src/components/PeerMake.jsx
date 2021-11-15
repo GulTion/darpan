@@ -3,7 +3,9 @@ import Peer from "peerjs";
 import "./_One.scss";
 import { customAlphabet } from "nanoid";
 import { connect } from "react-redux";
-const nanoid = customAlphabet("1234567890", 12);
+import RemoteList from "./RemoteList";
+import Socket from "./Socket";
+const nanoid = customAlphabet("abcdef", 4);
 //=> "4f90d13a42"
 document.remote = {};
 document.client = {};
@@ -14,7 +16,7 @@ export default connect(
       dispatch({ type: "ADD_PEER", data: { type, id } }),
   })
 )(function PeerMake({ addPeer }) {
-  const [key, setKey] = useState("Key is Loading...");
+  const [key, setKey] = useState(null);
   const [youKey, setYouKey] = useState("");
   const handleSetYouKey = (e) => {
     let key = e.target.value;
@@ -29,7 +31,7 @@ export default connect(
         console.log(data);
       });
       //   setInterval(() => {
-      client.send(new Date().toTimeString());
+      client.send({ a: window.screen.width, b: window.screen.height });
       document.client[youKey] = client;
       addPeer({ type: "clients", id: youKey });
 
@@ -71,6 +73,8 @@ export default connect(
         onChange={handleSetYouKey}
         onBlur={makeConnection}
       />
+      <Socket />
+      {key && <RemoteList />}
     </div>
   );
 });

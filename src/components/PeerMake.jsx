@@ -40,18 +40,28 @@ export default connect(
   };
 
   useEffect(() => {
-    let client = new Peer(nanoid());
+    let client = new Peer(nanoid(), {
+      host: "peerserver.gultion.repl.co",
+      port: 9000,
+      path: "/myapp",
+    });
+    console.log(client);
     client.on("open", (id) => {
       document.me = client;
       console.log(id);
       setKey(id);
     });
-
+    client.on("error", (id) => {
+      console.log("errr", id);
+    });
     // when client make connection to someone, and he is waiting for connection
     client.on("connection", function (remote) {
       remote.on("open", () => {
         remote.on("data", function (data) {
           console.log("Incoming data", data);
+          if (document.socket) {
+            document.socket.emit("mousemove", data);
+          }
           //   remote.send("Left");
         });
         document.remote[remote.peer] = remote;
@@ -73,7 +83,7 @@ export default connect(
         onChange={handleSetYouKey}
         onBlur={makeConnection}
       />
-      <Socket />
+      {/* <Socket /> */}
       {key && <RemoteList />}
     </div>
   );

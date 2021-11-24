@@ -11,10 +11,20 @@ const main = produce((state = initState, action) => {
 
   switch (type) {
     case "ADD_PEER":
-      state[data.type].push(data.id);
-
+      state[data.type][data.id] = { id: data.id, connected: false };
       break;
 
+    case "ADD_ID":
+      state.myid = data.id;
+      break;
+
+    case "EDIT_PEER":
+      state[data.type][data.id] = { ...state[data.type][data.id], ...data };
+      break;
+
+    case "ADD_OFFER":
+      state.signals[data.type] = { have: data.have, offer: data.offer };
+      break;
     default:
       return state;
       break;

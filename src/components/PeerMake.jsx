@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Peer from "peerjs";
 import "./_One.scss";
-import { customAlphabet } from "nanoid";
 import { connect } from "react-redux";
 import RemoteList from "./RemoteList";
-import Socket from "./Socket";
+// import Socket from "./Socket";
+import { customAlphabet } from "nanoid";
 const nanoid = customAlphabet("abcdef", 4);
 //=> "4f90d13a42"
 document.remote = {};
@@ -44,6 +44,7 @@ export default connect(
       host: "peerserver.gultion.repl.co",
       port: 9000,
       path: "/myapp",
+      key: "peerjs",
     });
     console.log(client);
     client.on("open", (id) => {
